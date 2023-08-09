@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stundenplan-Generator Sek. II</title>
+    <link rel="stylesheet" href="script/style.css" />
+    <script src="script/script.js" defer></script>
+  </head>
+  <body>
+    <div id="con">
+      <div id="csv-input-con">
+        <span>Sch&uuml;lerdaten (CSV-Datei):</span>
+        <input type="file" name="daten-input" id="daten-input" />
+      </div>
+
+      <div id="tabellenkopf-con">
+        <input type="checkbox" checked="true" name="tabellenkopf-inp" id="tabellenkopf-inp">
+        <span>Die Tabelle enthält einen Tabellenkopf.</span>
+      </div>
+      
+      <div id="anzahl-con">
+        <span>Wie viele Stundenpl&auml;ne sollen generiert werden?</span>
+        <input type="number" step="100" value="1000" name="anzahl-inp" id="anzahl-inp">
+      </div>
+
+      <div id="generieren-con">
+        <button type="button" id="generieren" onclick="DatenImportieren()">
+          Stundenpl&auml;ne generieren
+        </button>
+      </div>
+
+      <div id="fortschritt-con">
+        <span>Fortschritt:</span>
+      </div>
+
+      <div id="prog-bar-con">
+        <div id="prog-bar">
+          <div id="prog-bar-in"></div>
+          <span id="prog">0%</span>
+        </div>
+      </div>
+
+      <div id="num-input-con">
+        <span>Den #n-besten Plan herunterladen:</span>
+        <input
+          type="number"
+          name="herunterladen-input"
+          id="herunterladen-input"
+          value="1"
+          min="1"
+        />
+      </div>
+
+      <div id="herunterladen-con">
+        <button type="button" onclick="Ausgabe()" id="herunterladen">
+          Herunterladen
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
