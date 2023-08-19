@@ -4,60 +4,119 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stundenplan-Generator Sek. II</title>
+    <title>Stundenplangenerator Sek. II</title>
     <link rel="stylesheet" href="script/style.css" />
     <script src="script/script.js" defer></script>
   </head>
+
   <body>
-    <div id="con">
-      <div id="csv-input-con">
-        <span>Sch&uuml;lerdaten (CSV-Datei):</span>
-        <input type="file" name="daten-input" id="daten-input" />
-      </div>
+    <div id="container">
+      <header>
+        <h1>Stundenplangenerator Sek. II</h1>
+      </header>
 
-      <div id="tabellenkopf-con">
-        <input type="checkbox" checked="true" name="tabellenkopf-inp" id="tabellenkopf-inp">
-        <span>Die Tabelle enthält einen Tabellenkopf.</span>
-      </div>
-      
-      <div id="anzahl-con">
-        <span>Wie viele Stundenpl&auml;ne sollen generiert werden?</span>
-        <input type="number" step="100" value="1000" name="anzahl-inp" id="anzahl-inp">
-      </div>
+      <main>
+        <section>
+          <h2>Sch&uuml;lerdaten</h2>
+          <p style="margin-bottom: 8px">
+            Geben Sie die CSV-Datei ein, die die gew&auml;hlten Kurse der
+            Sch&uuml;ler enth&auml;lt. <br />
+            Sie k&ouml;nnen eine solche Datei erstellen, indem Sie eine neue
+            Excel-Arbeitsmappe erstellen und diese als CSV UTF-8 speichern.
+          </p>
+          <p>
+            Alternativ k&ouml;nnen Sie sich die
+            <span id="beispiel">Beispieldatei herunterladen</span>
+            und diese bearbeiten.
+          </p>
 
-      <div id="generieren-con">
-        <button type="button" id="generieren" onclick="DatenImportieren()">
-          Stundenpl&auml;ne generieren
-        </button>
-      </div>
+          <div id="datei">
+            <input
+              type="file"
+              name="daten-input"
+              id="daten-input"
+              style="display: none"
+            />
+            <label for="daten-input" class="button">CSV-Datei hinzuf&uuml;gen</label>
+            <span id="ausgewaehlt">Keine Datei ausgew&auml;hlt</span>
+          </div>
 
-      <div id="fortschritt-con">
-        <span>Fortschritt:</span>
-      </div>
+          <div id="tabellenkopf">
+            <input
+              type="checkbox"
+              name="tabellenkopf-inp"
+              id="tabellenkopf-inp"
+              checked="true"
+            />
+            <span id="tabellenkopf-ja-nein"
+              >Die Tabelle enth&auml;lt einen Tabellenkopf.</span
+            >
+          </div>
+        </section>
 
-      <div id="prog-bar-con">
-        <div id="prog-bar">
-          <div id="prog-bar-in"></div>
-          <span id="prog">0%</span>
-        </div>
-      </div>
+        <section>
+          <h2>Generieren</h2>
 
-      <div id="num-input-con">
-        <span>Den #n-besten Plan herunterladen:</span>
-        <input
-          type="number"
-          name="herunterladen-input"
-          id="herunterladen-input"
-          value="1"
-          min="1"
-        />
-      </div>
+          <div id="anzahl">
+            <span>Wie viele Stundenpl&auml;ne sollen generiert werden?</span>
+            <input
+              type="number"
+              step="100"
+              value="1000"
+              name="anzahl-inp"
+              id="anzahl-inp"
+              class="numbers"
+            />
+          </div>
 
-      <div id="herunterladen-con">
-        <button type="button" onclick="Ausgabe()" id="herunterladen">
-          Herunterladen
-        </button>
-      </div>
+          <button type="button" id="generieren" onclick="DatenImportieren()" class="button">
+            Stundenpl&auml;ne generieren
+          </button>
+        </section>
+
+        <section>
+          <h2>Fortschritt</h2>
+
+          <p>
+            F&uuml;r jeden Stundenplan werden Unterrichtsbl&ouml;cke zuf&auml;llig geordnet.
+            Danach wird &uuml;pr&uuml;ft, ob der Stundenplan f&uuml;r alle Sch&uuml;ler
+            m&ouml;glich ist. Dann werden alle Sch&uuml;ler ihren Kursen zugeordnet und
+            es wird ein neuer Stundenplan generiert.
+          </p>
+
+          <div id="prog-bar">
+            <div id="prog-bar-in"></div>
+            <span id="prog" class="numbers">0%</span>
+          </div>
+        </section>
+
+        <section>
+          <h2>Herunterladen</h2>
+
+          <p>
+            Jeder funktionierende Stundenplan bekommt eine Bewertung, die umso
+            besser ist, je gleichm&auml;&szlig;er die Anzahl der Sch&uuml;ler in
+            den Kursen verteilt ist und je weniger Freistunden die Sch&uuml;ler
+            haben.
+          </p>
+
+          <div id="welchen" style="margin: 8px 0">
+            <span>Den #n-besten Plan herunterladen:</span>
+            <input
+              type="number"
+              name="herunterladen-input"
+              id="herunterladen-input"
+              value="1"
+              min="1"
+              class="numbers"
+            />
+          </div>
+
+          <button type="button" onclick="Ausgabe()" id="herunterladen" class="button">
+            Herunterladen
+          </button>
+        </section>
+      </main>
     </div>
   </body>
 </html>

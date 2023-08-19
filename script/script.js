@@ -14,6 +14,8 @@ const minProKurs = 15; // hat ein Kurs weniger als ... Schueler, gibt es Punktab
 
 const namenStattIndex = true;
 
+const $ = (id) => document.getElementById(id);
+
 function Exe(daten) {
   Start();
 
@@ -39,7 +41,7 @@ function Ende(versuche) {
 }
 
 function DatenImportieren() {
-  const [datei] = document.getElementById("daten-input").files;
+  const [datei] = $("daten-input").files;
   let daten;
   const fr = new FileReader();
   fr.addEventListener(
@@ -68,7 +70,7 @@ function Fremdsprachen(d) {
 
 function DatenLesen(d) {
   const zeilen = d.split("\n");
-  if (document.getElementById("tabellenkopf-inp").checked) zeilen.splice(0, 1);
+  if ($("tabellenkopf-inp").checked) zeilen.splice(0, 1);
   for (const z of zeilen) {
     const text = z.split(";");
     const gk = [];
@@ -374,7 +376,7 @@ function csvDaten(nr) {
 }
 
 function Ausgabe() {
-  const nr = document.getElementById("herunterladen-input").value;
+  const nr = $("herunterladen-input").value;
   const daten = csvDaten(nr);
 
   const zeilen = [];
@@ -395,12 +397,12 @@ function Ausgabe() {
 function NaechstesProzent() {
   FERTIG = Math.floor((100 * PLAENE.length) / nPlaene);
   console.log(`${FERTIG}% fertig`);
-  document.getElementById("prog").innerHTML = `${FERTIG}%`;
-  document.getElementById("prog-bar").style.setProperty("--prog", FERTIG / 100);
+  $("prog").innerHTML = `${FERTIG}%`;
+  $("prog-bar").style.setProperty("--prog", FERTIG / 100);
 }
 
 function Generieren() {
-  nPlaene = document.getElementById("anzahl-inp").value;
+  nPlaene = $("anzahl-inp").value;
   maxVersuche = 1000 * nPlaene;
 
   let plan = [];
@@ -476,6 +478,17 @@ function Generieren() {
   }
 
   Versuch();
+}
+
+function BeispielHerunterladen() {
+  const inhalt =
+    "Nachname;Vorname;LK 1;LK 2;De-GK / Ma-GK;FS-GK (3 Std/W);FS-GK (2 Std/W);Ku-GK / Mu-GK;Ge-GK / WK;Geo-GK / WK;GRW-GK / WK;Bio-GK / WK;Ch-GK / WK;Ph-GK / WK;Eth-GK / Rel-GK;Sp-GK\nMustermann;Max;ma;ph;de;en;;mu;ge;geo;ast;inf;ch;;eth;sp\nMusterfrau;Erika;de;ge;ma;en;fr;ku;;yog;grw;bio;;ph;rel;sp";
+  const a = document.createElement("a");
+  const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
+  const datei = new Blob([bom, inhalt], { type: "text/csv;charset=utf-8;" });
+  a.href = URL.createObjectURL(datei);
+  a.download = `beispiel.csv`;
+  a.click();
 }
 
 class Schueler {
@@ -630,3 +643,13 @@ Object.prototype.sort = function (dir = 1) {
 String.prototype.f = function () {
   return this.charAt(0).toUpperCase() + this.toLowerCase().slice(1);
 };
+
+$("daten-input").addEventListener("change", () => {
+  $("ausgewaehlt").innerHTML = $("daten-input").files[0].name;
+});
+$("beispiel").addEventListener("click", BeispielHerunterladen);
+$("tabellenkopf-inp").addEventListener("change", () => {
+  $("tabellenkopf-ja-nein").innerHTML = $("tabellenkopf-inp").checked
+    ? "Die Tabelle enthält einen Tabellenkopf."
+    : "Die Tabelle enthält keinen Tabellenkopf.";
+});
